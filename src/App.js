@@ -1,24 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/layout/Navbar';
+import UserData from './components/users/UserData';
+import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
+import { BrowserRouter as Router ,Route,Routes as Switch } from 'react-router-dom';
+import About from './components/pages/About';
+import User from './components/users/User';
+import GithubState from './context/github/GithubState';
+import AlertState from './context/alert/AlertState';
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <GithubState>
+      <AlertState>
+    <Router>    
+      <div className="App">
+      <Navbar title='Github Finder' icon='fab fa-github'/>
+      <div className='container'>
+        <Alert />
+        <Switch>
+          <Route exact path='/' element={<>
+            <Search > </Search>
+              <UserData  />
+          </>}>
+          </Route>
+          <Route path='/about' element={<About/>}/>
+          <Route path='/user/:username' element={<User />}/>  
+        </Switch>
+      </div>
     </div>
+    </Router>
+    </AlertState>
+    </GithubState>
   );
 }
 
